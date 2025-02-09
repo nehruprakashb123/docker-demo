@@ -2,7 +2,7 @@
 import { ref, onMounted } from 'vue'
 
 const message = ref("Loading...");
-const apiUrl = import.meta.env.VITE_API_URL || "http://localhost:8080"; // Fallback for local dev
+const apiUrl = "/api"; // Nginx will proxy to backend
 
 onMounted(async () => {
   try {
