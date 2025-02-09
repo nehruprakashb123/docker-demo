@@ -1,19 +1,24 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
+	"log"
 	"net/http"
 )
 
-func handler(w http.ResponseWriter, r *http.Request) {
+type Response struct {
+	Message string `json:"message"`
+}
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"message": "Hello from Golang backend!"}`))
+	response := Response{Message: "Hello from Golang Backend!"}
+	json.NewEncoder(w).Encode(response)
 }
 
 func main() {
-	http.HandleFunc("/", handler)
-	port := 8080
-	fmt.Printf("Server running on port %d\n", port)
-	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
+	http.HandleFunc("/hello", helloHandler)
+
+	log.Println("Backend is running on port 8080...")
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }

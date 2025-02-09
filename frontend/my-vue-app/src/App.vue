@@ -1,12 +1,12 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from "vue";
 
-const message = ref("Loading...");
+const message = ref("Click the button to fetch data...");
 const apiUrl = "/api"; // Nginx will proxy to backend
 
-onMounted(async () => {
+const fetchData = async () => {
   try {
-    const response = await fetch(`${apiUrl}/`, {
+    const response = await fetch(`${apiUrl}/hello`, {
       method: "GET",
       headers: { "Content-Type": "application/json" }
     });
@@ -19,18 +19,33 @@ onMounted(async () => {
     console.error("Error fetching data:", error);
     message.value = "Failed to fetch data";
   }
-});
+};
 </script>
 
 <template>
-  <div>
-    <h1>Vue + Golang</h1>
+  <div class="container">
+    <h1>Vue + Golang Communication</h1>
     <p>{{ message }}</p>
+    <button @click="fetchData">Fetch Data from Backend</button>
   </div>
 </template>
 
 <style>
-h1 {
-  color: #42b983;
+.container {
+  text-align: center;
+  margin-top: 50px;
+}
+
+button {
+  background-color: #42b983;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #36956d;
 }
 </style>
