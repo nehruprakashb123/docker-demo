@@ -13,7 +13,7 @@ RUN go mod tidy
 COPY . .
 
 # Build the application
-RUN go build -o main .
+RUN CGO_ENABLED=0 GOOS=linux go build -o main .
 
 # Stage 2: Run the application
 FROM alpine:latest AS runtime
@@ -27,4 +27,4 @@ COPY --from=builder /app/main .
 EXPOSE 8080
 
 # Run the application
-CMD ["/app/main"]
+CMD ["./main"]
