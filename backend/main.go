@@ -23,7 +23,6 @@ func initDB() {
 	if connStr == "" {
 		log.Fatal("DATABASE_URL environment variable is not set")
 	}
-
 	// Connect to the database
 	db, err = sql.Open("postgres", connStr)
 	if err != nil {
